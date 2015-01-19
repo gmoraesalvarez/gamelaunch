@@ -17,6 +17,8 @@ names = []
 px = []
 py = []
 isize=160
+tw = 100
+th = 100
 
 def calcpos(w):
     
@@ -122,8 +124,10 @@ def launch(x,y):
                 #Popen([cmd,arg])
 		#os.system(app)
 		call(app,shell=True)
+                #quit()
             except:
                 print 'cannot start '+cmd
+                #quit()
         i=i+1
 
 def drawicons(frame):
@@ -145,8 +149,15 @@ def drawicons(frame):
                         im = Image.open(iconpaths[i])
                     except:
                         print 'cannot open '+iconpaths[i]
+                        im = Image.open('x.png')
                 try:
-                    imr = im.resize((96,96),Image.BICUBIC)
+                    iw,ih = im.size
+                    print 'iw'+str(iw)+' ih'+str(ih)
+                    print 'rw'+str(iw/ih)+' rh'+str(ih/iw)
+                    tw = int((iw/ih)*100)
+                    th = int((ih/iw)*100)
+                    print 'tw'+str(tw)+' th'+str(th)
+                    imr = im.resize((tw,th),Image.ANTIALIAS)
                     temp = ImageTk.PhotoImage(imr)
                 except:
                     temp = ImageTk.PhotoImage(Image.open('x.png'))
